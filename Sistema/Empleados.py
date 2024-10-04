@@ -2,7 +2,7 @@
 import re 
 import cargo_empleados as cargo
 
-class Empleados:
+class Empleados(cargo):
     def __init__(self, id_empleado, nombre_empleado, id_cargo, direccion, numero_de_telefono, correo, fecha_de_inicio_de_contrato, salario, rut, fecha_nacimiento):
         self.id_empleado = id_empleado
         self.nombre_empleado = nombre_empleado
