@@ -1,12 +1,14 @@
 
 import re 
-import cargo_empleados as cargo
+import cargo_empleados
+import Rol
 
-class Empleados(cargo):
-    def __init__(self, id_empleado, nombre_empleado, id_cargo, direccion, numero_de_telefono, correo, fecha_de_inicio_de_contrato, salario, rut, fecha_nacimiento):
+class Empleados(cargo_empleados,Rol):
+    def __init__(self, id_empleado, nombre_empleado, id_cargo, direccion, numero_de_telefono, correo, fecha_de_inicio_de_contrato, salario, rut, fecha_nacimiento,id_roles):
         self.id_empleado = id_empleado
         self.nombre_empleado = nombre_empleado
-        cargo.__init__(id_cargo)
+        cargo_empleados.__init__(id_cargo)
+        Rol.__init__(id_roles)
         self.direccion = direccion
         self.numero_de_telefono = numero_de_telefono
         self.correo = correo
