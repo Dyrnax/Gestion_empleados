@@ -1,22 +1,23 @@
 
 import re 
-import cargo_empleados
-import Rol
+import Cargo_empleados
+import Roles
 
-class Empleados(cargo_empleados,Rol):
-    def __init__(self, id_empleado, nombre_empleado, id_cargo, direccion, numero_de_telefono, correo, fecha_de_inicio_de_contrato, salario, rut, fecha_nacimiento,id_roles,contraseña):
-        self.id_empleado = id_empleado
-        self.nombre_empleado = nombre_empleado
-        cargo_empleados.__init__(id_cargo)
-        Rol.__init__(id_roles)
-        self.direccion = direccion
-        self.numero_de_telefono = numero_de_telefono
-        self.correo = correo
-        self.fecha_de_inicio_de_contrato = fecha_de_inicio_de_contrato
-        self.salario = salario
-        self.rut = rut
-        self.fecha_nacimiento = fecha_nacimiento
-        self.contraseña= contraseña
+class Empleados(Cargo_empleados,Roles):
+    def __init__(self,id_empleado,nombre_empleado,id_rol,id_cargo,direccion,numero_de_telefono,correo,fecha_de_inicio_de_contrato,salario,rut,fecha_nacimiento,contrasena):
+        self.id_emplado=id_empleado
+        self.nombre_empleado=nombre_empleado
+        Roles.__init__(id_rol)
+        Cargo_empleados.__init__(id_cargo)
+        self.direccion=direccion
+        self.numero_de_empleado=numero_de_telefono
+        self.correo=correo
+        self.fecha_de_inicio_de_contrato=fecha_de_inicio_de_contrato
+        self.salario=salario
+        self.rut=rut
+        self.fecha_nacimiento=fecha_nacimiento
+        self.contrasena=contrasena
+        
         
     def validar_correo(self):
         pat_correo= r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
