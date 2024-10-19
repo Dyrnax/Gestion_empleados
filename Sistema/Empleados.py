@@ -1,14 +1,14 @@
 
 import re 
-import cargo_empleados
-import Rol
+from cargo_empleados import CargoEmpleados
+from rol import Rol
 
-class Empleados(cargo_empleados,Rol):
-    def __init__(self, id_empleado, nombre_empleado, id_cargo, direccion, numero_de_telefono, correo, fecha_de_inicio_de_contrato, salario, rut, fecha_nacimiento,id_roles,contraseña):
+class Empleados(CargoEmpleados,Rol):
+    def __init__(self, id_empleado, nombre_empleado, id_cargo, direccion, numero_de_telefono, correo, fecha_de_inicio_de_contrato, salario, rut, fecha_nacimiento,id_rol,contrasena):
         self.id_empleado = id_empleado
         self.nombre_empleado = nombre_empleado
-        cargo_empleados.__init__(id_cargo)
-        Rol.__init__(id_roles)
+        CargoEmpleados().__init__(id_cargo)
+        Rol().__init__(id_rol)
         self.direccion = direccion
         self.numero_de_telefono = numero_de_telefono
         self.correo = correo
@@ -16,7 +16,7 @@ class Empleados(cargo_empleados,Rol):
         self.salario = salario
         self.rut = rut
         self.fecha_nacimiento = fecha_nacimiento
-        self.contraseña= contraseña
+        self.contrasena= contrasena
         
     def validar_correo(self):
         pat_correo= r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
@@ -32,3 +32,8 @@ class Empleados(cargo_empleados,Rol):
         else:
             return False
         
+    def encriptar_contrasena():
+        pass
+    
+    def desencriptar_contrasena():
+        pass

@@ -1,13 +1,12 @@
-import Empleados
-import Proyecto
-import asignacion_proyecto
+from empleados import Empleados
+from proyecto import Proyecto
+from asignacion_proyecto import AsignacionProyecto
 
-class registro_de_tiempo(Empleados,Proyecto,asignacion_proyecto):
-    def __init__(self,id_empleado,id_proyecto,id_asociacion,id_registro,fecha,horas_trabajadas,tareas):
-        Empleados.__init__(id_empleado)
-        Proyecto.__init__(id_proyecto)
-        asignacion_proyecto.__init__(id_asociacion)
-        self.id_registro=id_registro
-        self.fecha= fecha
-        self.horas_trabajadas=horas_trabajadas
-        self.tareas=tareas
+class RegistroDeTiempo(Empleados,Proyecto,AsignacionProyecto):
+    def __init__(self,id_asignacion_pro,id_registro,fecha,horas_trabajadas,tareas,observacion):
+        AsignacionProyecto.__init__(id_asignacion_pro)
+        self.id_registro = id_registro
+        self.fecha = fecha
+        self.horas_trabajadas = horas_trabajadas
+        self.tareas = tareas
+        self.observacion = observacion
