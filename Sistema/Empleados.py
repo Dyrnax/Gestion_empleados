@@ -27,13 +27,16 @@ class Empleados(CargoEmpleados,Rol):
         
     def validar_telefono(self):
         pat_telefono= r'^\+?[\d\s\-]{7,15}$'
-        if re.match(pat_telefono,self.numero_de_telefono):
+        if re.match(pat_telefono,self.numero_de_empleado):
             return  True 
         else:
             return False
         
-    def encriptar_contrasena():
-        pass
+    def encriptar_contrasena(self, contrasena):
+        salt = bcrypt.gensalt() 
+        hashed_contrasena = bcrypt.hashpw(contrasena.encode('utf-8'), salt)
+        return hashed_contrasena
+
     
-    def desencriptar_contrasena():
-        pass
+    def desencriptar_contrasena(self, contrasena):
+        return bcrypt.checkpw(contrasena.encode('utf-8'), self.contrasena)
