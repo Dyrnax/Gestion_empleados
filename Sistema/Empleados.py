@@ -1,14 +1,16 @@
 
 import re 
 from cargo_empleados import CargoEmpleados
-from rol import Rol
+from Rol import rol
+import bcrypt
 
-class Empleados(CargoEmpleados,Rol):
+
+class Empleados(CargoEmpleados,rol):
     def __init__(self, id_empleado, nombre_empleado, id_cargo, direccion, numero_de_telefono, correo, fecha_de_inicio_de_contrato, salario, rut, fecha_nacimiento,id_rol,contrasena):
         self.id_empleado = id_empleado
         self.nombre_empleado = nombre_empleado
         CargoEmpleados().__init__(id_cargo)
-        Rol().__init__(id_rol)
+        rol().__init__(id_rol)
         self.direccion = direccion
         self.numero_de_telefono = numero_de_telefono
         self.correo = correo
