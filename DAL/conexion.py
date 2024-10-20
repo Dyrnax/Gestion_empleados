@@ -13,8 +13,9 @@ try:
     if conexion.is_connected():
         print("Conexión exitosa a la base de datos")
         cursor = conexion.cursor()
-        cursor.execute("SELECT * FROM empleados")
+        
     
 except Error as e:
     print(f"Error al conectar a MySQL: {e}")
     
+cursor.execute("SELECT * FROM empleados")
