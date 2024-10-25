@@ -18,4 +18,3 @@ try:
 except Error as e:
     print(f"Error al conectar a MySQL: {e}")
     
-cursor.execute("SELECT * FROM empleados")
