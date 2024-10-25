@@ -14,6 +14,7 @@ class clas_generarcion_informe(clas_registro_tiempo,clas_departamento,clas_emple
         self.fecha_creacion =fecha_creacion
         self.descripcion=descripcion
         self.ubicacion=ubicacion
+        self.id_informe=id_informe
 
     def exportar_informe():
         # Se usa pandas
