@@ -6,3 +6,6 @@ class clas_proyecto():
         self.descipcion_proyecto =descripcion_proyecto
         self.fecha_incio =fecha_inicio
         self.fecha_fin =fecha_fin
+
+    def validar_fechas():
+        pass
