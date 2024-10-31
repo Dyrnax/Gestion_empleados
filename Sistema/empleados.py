@@ -283,7 +283,6 @@ root.grid_rowconfigure(len(etiquetas) + 2, weight=1)
 root.grid_columnconfigure(0, weight=1)
 root.grid_columnconfigure(1, weight=1)
 
-# Enlazar la selección del árbol a la función
 tree.bind("<<TreeviewSelect>>", seleccionar_empleado)
 
 root.mainloop()
