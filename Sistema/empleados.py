@@ -47,11 +47,6 @@ class clas_empleados(clas_rol,clas_cargo_empleados):
     def desencriptar_contrasena(self, contrasena):
         return bcrypt.checkpw(contrasena.encode('utf-8'), self.contrasena)
 
-import mysql.connector
-import bcrypt
-import tkinter as tk
-from tkinter import messagebox, ttk
-
 def conectar_bd():
     try:
         conexion = mysql.connector.connect(
