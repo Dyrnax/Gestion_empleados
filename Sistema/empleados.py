@@ -47,10 +47,7 @@ class clas_empleados(clas_rol,clas_cargo_empleados):
     def desencriptar_contrasena(self, contrasena):
         return bcrypt.checkpw(contrasena.encode('utf-8'), self.contrasena)
 
-import tkinter as tk
-from tkinter import messagebox, ttk
-import mysql.connector
-import bcrypt
+
 
 # Conexión a la base de datos MySQL
 def conectar_bd():
@@ -103,11 +100,11 @@ def mostrar_empleados():
     if conn is None:
         return
     cursor = conn.cursor()
-    query = "SELECT * FROM empleados WHERE habilitado = %s"
+    qy = "SELECT * FROM empleados WHERE habilitado = %s"
     data = (1,)  # Solo muestra empleados con habilitado = 1
 
     try:
-        cursor.execute(query, data)
+        cursor.execute(qy, data)
         rows = cursor.fetchall()
         tree.delete(*tree.get_children())  # Limpiar tabla de empleados habilitados
         for row in rows:
@@ -124,11 +121,11 @@ def mostrar_empleados_deshabilitados():
     if conn is None:
         return
     cursor = conn.cursor()
-    query = "SELECT * FROM empleados WHERE habilitado = %s"
+    pq = "SELECT * FROM empleados WHERE habilitado = %s"
     data = (0,)  # Solo muestra empleados con habilitado = 0
 
     try:
-        cursor.execute(query, data)
+        cursor.execute(pq, data)
         rows = cursor.fetchall()
         tree_deshabilitados.delete(*tree_deshabilitados.get_children())  # Limpiar tabla de empleados deshabilitados
         for row in rows:
@@ -147,7 +144,7 @@ def modificar_empleado():
     cursor = conn.cursor()
     
     contrasena_encriptada = bcrypt.hashpw(entry_contrasena.get().encode(), bcrypt.gensalt())
-    query = '''UPDATE empleados SET NOMBRE_EMPLEADO=%s, ID_ROL=%s, IDCARGO=%s, DIRECCION=%s,
+    qq = '''UPDATE empleados SET NOMBRE_EMPLEADO=%s, ID_ROL=%s, IDCARGO=%s, DIRECCION=%s,
                NUMERO_DE_TELEFONO=%s, CORREO=%s, FECHA_INICIO_CONTRATO=%s, SALARIO=%s,
                RUT=%s, FECHA_NACIMIENTO=%s, CONTRASENA=%s WHERE ID_EMPLEADO=%s AND habilitado = %s'''
     data = (entry_nombre.get(), entry_id_rol.get(), entry_id_cargo.get(),
@@ -156,7 +153,7 @@ def modificar_empleado():
             entry_fecha_nacimiento.get(), contrasena_encriptada, entry_id.get(), 1)
     
     try:
-        cursor.execute(query, data)
+        cursor.execute(qq, data)
         conn.commit()
         messagebox.showinfo("Éxito", "Empleado actualizado exitosamente.")
         limpiar_campos()
