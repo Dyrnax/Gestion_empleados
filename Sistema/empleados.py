@@ -47,6 +47,11 @@ class clas_empleados(clas_rol,clas_cargo_empleados):
     def desencriptar_contrasena(self, contrasena):
         return bcrypt.checkpw(contrasena.encode('utf-8'), self.contrasena)
 
+import tkinter as tk
+from tkinter import messagebox, ttk
+import mysql.connector
+import bcrypt
+
 # Conexión a la base de datos MySQL
 def conectar_bd():
     try:
@@ -234,11 +239,11 @@ def seleccionar_empleado(event):
                 entry.delete(0, tk.END)
                 entry.insert(0, valores[i])
 
-# Interfaz
+# Interfaz 
 root = tk.Tk()
 root.title("Gestión de Empleados")
 
-# Etiquetas y entradas
+# Etiquetas 
 etiquetas = [
     "ID Empleado", "Nombre Empleado", "ID Rol", "ID Cargo", "Dirección", "Teléfono",
     "Correo", "Fecha Inicio Contrato (YYYY-MM-DD)", "Salario", "RUT", 
@@ -250,7 +255,7 @@ for i, etiqueta in enumerate(etiquetas):
     entry = tk.Entry(root)
     entry.grid(row=i, column=1, padx=10, pady=5)
     entradas.append(entry)
-entradas[-1].config(show="*")  
+entradas[-1].config(show="*") 
 
 entry_id, entry_nombre, entry_id_rol, entry_id_cargo, entry_direccion, entry_telefono, \
 entry_correo, entry_fecha_inicio, entry_salario, entry_rut, \
@@ -279,15 +284,15 @@ tree_deshabilitados = ttk.Treeview(root, columns=("ID", "Nombre", "Rol", "Cargo"
                                     "Correo", "Fecha Inicio", "Salario", "RUT", "Fecha Nac", "Contraseña"), show="headings")
 tree_deshabilitados.grid(row=len(etiquetas) + 4, column=0, columnspan=2, padx=10, pady=10, sticky='nsew')
 
-# Configuración de las columnas de la tabla
+
 for col in tree["columns"]:
     tree.heading(col, text=col)
-    tree.column(col, anchor="center")
+    tree.column(col, anchor="center", width=150)  # Aumentar el ancho de las columnas
 
 # Configuración de las columnas de la tabla deshabilitados
 for col in tree_deshabilitados["columns"]:
     tree_deshabilitados.heading(col, text=col)
-    tree_deshabilitados.column(col, anchor="center")
+    tree_deshabilitados.column(col, anchor="center", width=150)  # Aumentar el ancho de las columnas
 
 # Configuración de la cuadrícula para expandirse
 root.grid_rowconfigure(len(etiquetas) + 3, weight=1)
@@ -299,7 +304,7 @@ root.grid_columnconfigure(1, weight=1)
 tree.bind("<<TreeviewSelect>>", seleccionar_empleado)
 tree_deshabilitados.bind("<<TreeviewSelect>>", seleccionar_empleado)
 
-
+# Inicializar las tablas mostrando todos los empleados
 mostrar_empleados()
 mostrar_empleados_deshabilitados()
 
