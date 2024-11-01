@@ -56,7 +56,7 @@ def conectar_bd():
             user='root',
             host='localhost',
             database='gestion_empleados',
-            password='',  # Añade tu contraseña aquí si es necesario
+            password='',  
             port='3306'
         )
         return conexion
@@ -64,7 +64,7 @@ def conectar_bd():
         messagebox.showerror("Error de Conexión", f"No se pudo conectar a la base de datos: {e}")
         return None
 
-# Función para crear un empleado
+
 def agregar_empleado():
     conn = conectar_bd()
     if conn is None:
@@ -84,29 +84,28 @@ def agregar_empleado():
     try:
         cursor.execute(query, data)
         conn.commit()
-        messagebox.showinfo("Éxito", "Empleado creado exitosamente.")
+        messagebox.showinfo("Éxito", "Empleado a sido creado exitosamente.")
         limpiar_campos()
-        mostrar_empleados()  # Mostrar empleados habilitados
-        mostrar_empleados_deshabilitados()  # Actualizar empleados deshabilitados
+        mostrar_empleados()
     except mysql.connector.Error as e:
-        messagebox.showerror("Error", f"Error creando el empleado: {e}")
+        messagebox.showerror("Error", f"Error creando el empleado :( : {e}")
     finally:
         cursor.close()
         conn.close()
 
-# Función para mostrar empleados habilitados
+
 def mostrar_empleados():
     conn = conectar_bd()
     if conn is None:
         return
     cursor = conn.cursor()
-    qy = "SELECT * FROM empleados WHERE habilitado = %s"
+    query = "SELECT * FROM empleados WHERE habilitado = %s"
     data = (1,)  # Solo muestra empleados con habilitado = 1
 
     try:
-        cursor.execute(qy, data)
+        cursor.execute(query, data)
         rows = cursor.fetchall()
-        tree.delete(*tree.get_children())  # Limpiar tabla de empleados habilitados
+        tree.delete(*tree.get_children())  # Limpiar tabla antes de mostrar
         for row in rows:
             tree.insert("", tk.END, values=row)
     except mysql.connector.Error as e:
@@ -115,28 +114,7 @@ def mostrar_empleados():
         cursor.close()
         conn.close()
 
-# Función para mostrar empleados deshabilitados
-def mostrar_empleados_deshabilitados():
-    conn = conectar_bd()
-    if conn is None:
-        return
-    cursor = conn.cursor()
-    pq = "SELECT * FROM empleados WHERE habilitado = %s"
-    data = (0,)  # Solo muestra empleados con habilitado = 0
 
-    try:
-        cursor.execute(pq, data)
-        rows = cursor.fetchall()
-        tree_deshabilitados.delete(*tree_deshabilitados.get_children())  # Limpiar tabla de empleados deshabilitados
-        for row in rows:
-            tree_deshabilitados.insert("", tk.END, values=row)
-    except mysql.connector.Error as e:
-        messagebox.showerror("Error", f"Error al mostrar empleados deshabilitados: {e}")
-    finally:
-        cursor.close()
-        conn.close()
-
-# Función para actualizar la información de un empleado
 def modificar_empleado():
     conn = conectar_bd()
     if conn is None:
@@ -144,7 +122,7 @@ def modificar_empleado():
     cursor = conn.cursor()
     
     contrasena_encriptada = bcrypt.hashpw(entry_contrasena.get().encode(), bcrypt.gensalt())
-    qq = '''UPDATE empleados SET NOMBRE_EMPLEADO=%s, ID_ROL=%s, IDCARGO=%s, DIRECCION=%s,
+    query = '''UPDATE empleados SET NOMBRE_EMPLEADO=%s, ID_ROL=%s, IDCARGO=%s, DIRECCION=%s,
                NUMERO_DE_TELEFONO=%s, CORREO=%s, FECHA_INICIO_CONTRATO=%s, SALARIO=%s,
                RUT=%s, FECHA_NACIMIENTO=%s, CONTRASENA=%s WHERE ID_EMPLEADO=%s AND habilitado = %s'''
     data = (entry_nombre.get(), entry_id_rol.get(), entry_id_cargo.get(),
@@ -153,19 +131,18 @@ def modificar_empleado():
             entry_fecha_nacimiento.get(), contrasena_encriptada, entry_id.get(), 1)
     
     try:
-        cursor.execute(qq, data)
+        cursor.execute(query, data)
         conn.commit()
         messagebox.showinfo("Éxito", "Empleado actualizado exitosamente.")
         limpiar_campos()
-        mostrar_empleados()  # Actualizar empleados habilitados
-        mostrar_empleados_deshabilitados()  # Actualizar empleados deshabilitados
+        mostrar_empleados()
     except mysql.connector.Error as e:
         messagebox.showerror("Error", f"Error actualizando el empleado: {e}")
     finally:
         cursor.close()
         conn.close()
 
-# Función para deshabilitar un empleado
+
 def deshabilitar_empleado():
     conn = conectar_bd()
     if conn is None:
@@ -181,44 +158,19 @@ def deshabilitar_empleado():
         conn.commit()
         messagebox.showinfo("Éxito", "Empleado deshabilitado exitosamente.")
         limpiar_campos()
-        mostrar_empleados()  # Actualizar empleados habilitados
-        mostrar_empleados_deshabilitados()  # Actualizar empleados deshabilitados
+        mostrar_empleados()  # Actualizar la tabla
     except mysql.connector.Error as e:
         messagebox.showerror("Error", f"Error deshabilitando el empleado: {e}")
     finally:
         cursor.close()
         conn.close()
 
-# Función para habilitar un empleado
-def habilitar_empleado():
-    conn = conectar_bd()
-    if conn is None:
-        return
-    cursor = conn.cursor()
 
-    # Cambiar el campo habilitado a 1 para habilitar
-    query = "UPDATE empleados SET habilitado = %s WHERE ID_EMPLEADO = %s"
-    data = (1, entry_id.get())
-
-    try:
-        cursor.execute(query, data)
-        conn.commit()
-        messagebox.showinfo("Éxito", "Empleado habilitado exitosamente.")
-        limpiar_campos()
-        mostrar_empleados()  # Actualizar empleados habilitados
-        mostrar_empleados_deshabilitados()  # Actualizar empleados deshabilitados
-    except mysql.connector.Error as e:
-        messagebox.showerror("Error", f"Error habilitando el empleado: {e}")
-    finally:
-        cursor.close()
-        conn.close()
-
-# Función para limpiar los campos de entrada
 def limpiar_campos():
     for entry in entradas:
         entry.delete(0, tk.END)
 
-# Función para manejar la selección de un empleado en la tabla
+
 def seleccionar_empleado(event):
     seleccion = tree.selection()
     if seleccion:
@@ -227,14 +179,6 @@ def seleccionar_empleado(event):
         for i, entry in enumerate(entradas):
             entry.delete(0, tk.END)
             entry.insert(0, valores[i])
-    else:
-        seleccion_deshabilitado = tree_deshabilitados.selection()
-        if seleccion_deshabilitado:
-            item = tree_deshabilitados.item(seleccion_deshabilitado[0])
-            valores = item["values"]
-            for i, entry in enumerate(entradas):
-                entry.delete(0, tk.END)
-                entry.insert(0, valores[i])
 
 # Interfaz 
 root = tk.Tk()
@@ -252,15 +196,18 @@ for i, etiqueta in enumerate(etiquetas):
     entry = tk.Entry(root)
     entry.grid(row=i, column=1, padx=10, pady=5)
     entradas.append(entry)
-entradas[-1].config(show="*") 
+entradas[-1].config(show="*")  
 
 entry_id, entry_nombre, entry_id_rol, entry_id_cargo, entry_direccion, entry_telefono, \
 entry_correo, entry_fecha_inicio, entry_salario, entry_rut, \
 entry_fecha_nacimiento, entry_contrasena = entradas
 
-# Botones de acción
+# Botones para acciones CRUD
 btn_agregar = tk.Button(root, text="Agregar Empleado", command=agregar_empleado)
 btn_agregar.grid(row=len(etiquetas), column=0, padx=10, pady=10)
+
+btn_mostrar = tk.Button(root, text="Mostrar Empleados", command=mostrar_empleados)
+btn_mostrar.grid(row=len(etiquetas), column=1, padx=10, pady=10)
 
 btn_modificar = tk.Button(root, text="Actualizar Empleado", command=modificar_empleado)
 btn_modificar.grid(row=len(etiquetas) + 1, column=0, padx=10, pady=10)
@@ -268,42 +215,22 @@ btn_modificar.grid(row=len(etiquetas) + 1, column=0, padx=10, pady=10)
 btn_deshabilitar = tk.Button(root, text="Deshabilitar Empleado", command=deshabilitar_empleado)
 btn_deshabilitar.grid(row=len(etiquetas) + 1, column=1, padx=10, pady=10)
 
-btn_habilitar = tk.Button(root, text="Habilitar Empleado", command=habilitar_empleado)
-btn_habilitar.grid(row=len(etiquetas) + 2, column=0, padx=10, pady=10)
-
-# Configuración de la tabla para mostrar empleados habilitados
+# Configuración de la tabla para mostrar empleados
 tree = ttk.Treeview(root, columns=("ID", "Nombre", "Rol", "Cargo", "Dirección", "Teléfono", 
                                     "Correo", "Fecha Inicio", "Salario", "RUT", "Fecha Nac", "Contraseña"), show="headings")
-tree.grid(row=len(etiquetas) + 3, column=0, columnspan=2, padx=10, pady=10, sticky='nsew')
+tree.grid(row=len(etiquetas) + 2, column=0, columnspan=2, padx=10, pady=10, sticky='nsew')
 
-# Configuración de la tabla para mostrar empleados deshabilitados
-tree_deshabilitados = ttk.Treeview(root, columns=("ID", "Nombre", "Rol", "Cargo", "Dirección", "Teléfono", 
-                                    "Correo", "Fecha Inicio", "Salario", "RUT", "Fecha Nac", "Contraseña"), show="headings")
-tree_deshabilitados.grid(row=len(etiquetas) + 4, column=0, columnspan=2, padx=10, pady=10, sticky='nsew')
-
-
+# Configuración de las columnas de la tabla
 for col in tree["columns"]:
     tree.heading(col, text=col)
-    tree.column(col, anchor="center", width=150)  # Aumentar el ancho de las columnas
+    tree.column(col, anchor="center", width=120)  # Aumentar el ancho de las columnas
 
-# Configuración de las columnas de la tabla deshabilitados
-for col in tree_deshabilitados["columns"]:
-    tree_deshabilitados.heading(col, text=col)
-    tree_deshabilitados.column(col, anchor="center", width=150)  # Aumentar el ancho de las columnas
-
-# Configuración de la cuadrícula para expandirse
-root.grid_rowconfigure(len(etiquetas) + 3, weight=1)
-root.grid_rowconfigure(len(etiquetas) + 4, weight=1)
+root.grid_rowconfigure(len(etiquetas) + 2, weight=1)
 root.grid_columnconfigure(0, weight=1)
 root.grid_columnconfigure(1, weight=1)
 
-# Enlazar la selección del árbol a la función
-tree.bind("<<TreeviewSelect>>", seleccionar_empleado)
-tree_deshabilitados.bind("<<TreeviewSelect>>", seleccionar_empleado)
 
-# Inicializar las tablas mostrando todos los empleados
-mostrar_empleados()
-mostrar_empleados_deshabilitados()
+tree.bind("<<TreeviewSelect>>", seleccionar_empleado)
 
 root.mainloop()
 
