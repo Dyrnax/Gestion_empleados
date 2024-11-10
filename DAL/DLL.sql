@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-10-2024 a las 04:56:49
+-- Tiempo de generación: 10-11-2024 a las 18:41:15
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -132,10 +132,10 @@ CREATE TABLE `empleados` (
 -- Volcado de datos para la tabla `empleados`
 --
 
-INSERT INTO `empleados` (`ID_EMPLEADO`, `NOMBRE_EMPLEADO`, `ID_ROL`, `IDCARGO`, `DIRECCION`, `NUMERO_DE_TELEFONO`, `CORREO`, `FECHA_INICIO_CONTRATO`, `SALARIO`, `RUT`, `FECHA_NACIMIENTO`, `CONTRASENA`) VALUES
-(101, 'Juan Pérez', 1, 1, 'Av. Principal 123', '987-654-3210', 'juan.perez@empresa.com', '2020-01-15', 50000, '12.345.678-9', '1985-06-15', 'password123'),
-(102, 'María García', 2, 2, 'Calle Secundaria 456', '987-123-4567', 'maria.garcia@empresa.com', '2019-03-10', 45000, '98.765.432-1', '1990-11-25', 'password456'),
-(103, 'Carlos López', 3, 3, 'Av. Tercera 789', '987-789-1234', 'carlos.lopez@empresa.com', '2021-07-20', 55000, '23.456.789-0', '1988-09-30', 'password789');
+INSERT INTO `empleados` (`ID_EMPLEADO`, `NOMBRE_EMPLEADO`, `ID_ROL`, `IDCARGO`, `DIRECCION`, `NUMERO_DE_TELEFONO`, `CORREO`, `FECHA_INICIO_CONTRATO`, `SALARIO`, `RUT`, `FECHA_NACIMIENTO`, `CONTRASENA`, `HABILITADO`) VALUES
+(101, 'Juan Pérez', 1, 1, 'Av. Principal 123', '987-654-3210', 'juan.perez@empresa.com', '2020-01-15', 50000, '12.345.678-9', '1985-06-15', 'password123', 1),
+(102, 'María García', 2, 2, 'Calle Secundaria 456', '987-123-4567', 'maria.garcia@empresa.com', '2019-03-10', 45000, '98.765.432-1', '1990-11-25', 'password456', 1),
+(103, 'Carlos López', 3, 3, 'Av. Tercera 789', '987-789-1234', 'carlos.lopez@empresa.com', '2021-07-20', 55000, '23.456.789-0', '1988-09-30', 'password789', 1);
 
 -- --------------------------------------------------------
 
