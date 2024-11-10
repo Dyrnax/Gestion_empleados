@@ -64,8 +64,7 @@ try:
         valores29=(2, 3, '2024-09-20', 8, 'Revisión de avances', 'Sin observaciones')
         valores30=(3, 2, '2024-09-21', 7, 'Desarrollo del backend', 'Se encontraron errores menores')
         valores31=(1, 1, '2024-09-22', 9, 'Análisis de resultados', 'Análisis completado correctamente')
-        cursor.execute(sql11,valores31)
-        conexion.commit()  # Confirma los cambios
+        ##conexion.commit()  # Confirma los cambios
         print("Datos insertados correctamente") 
 except Error as e:
     print(f"Error al conectar a MySQL: {e}")
